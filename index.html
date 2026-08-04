@@ -18,18 +18,18 @@
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            overflow: hidden;
-            padding: 15px;
+            overflow-x: hidden;
+            padding: 20px;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.9);
-            padding: 30px 20px;
+            padding: 35px 25px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             text-align: center;
-            max-width: 450px;
+            max-width: 480px;
             width: 100%;
             z-index: 10;
         }
@@ -38,41 +38,47 @@
             color: #d63031;
             font-size: 1.6rem;
             margin-bottom: 15px;
+            word-wrap: break-word;
         }
 
         p {
             color: #2d3436;
             font-size: 1rem;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            word-wrap: break-word;
         }
 
+        /* Khung chứa 2 nút: Tự động sắp xếp không bao giờ đè lên chữ phía trên */
         .btn-group {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
-            min-height: 100px;
+            width: 100%;
+            margin-top: 10px;
         }
 
         button {
-            padding: 12px 24px;
-            font-size: 1rem;
-            font-weight: bold;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            font-weight: bold;
+            transition: all 0.25s ease-in-out;
             max-width: 100%;
-            word-wrap: break-word;
+            white-space: normal;
+            word-break: break-word;
+            line-height: 1.3;
         }
 
         .btn-yes {
             background-color: #ff7675;
             color: white;
             box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
-            z-index: 20;
+            padding: 12px 24px;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         .btn-yes:hover {
@@ -83,7 +89,9 @@
             background-color: #636e72;
             color: white;
             box-shadow: 0 5px 15px rgba(99, 110, 114, 0.3);
-            z-index: 10;
+            padding: 12px 20px;
+            font-size: 0.95rem;
+            max-width: 220px;
         }
 
         .btn-no:hover {
@@ -158,10 +166,9 @@
         const noTexts = [
             "Bà xã hơm chắc chưa? 🥺",
             "Thật sự không nhớ ông xã hối hả? 💔",
-            "Suy nghĩ lại đi mà... 🌸",
+            "Nhớ đi mờ 🥺",
             "Đừng phũ thế chứ 😞",
-            "Một cơ hội nữa thôi 🥺",
-            "Bấm CÓ đi mà! ❤️",
+            "Suy nghĩ lại đi mờ... 🌸",
             "Không cho bấm KHÔNG nữa đâu!"
         ];
 
@@ -173,11 +180,11 @@
         function refuseLove() {
             clickCount++;
 
-            // Phình to nút CÓ bằng padding & font-size thay vì scale để không che nội dung khác
-            if (yesFontSize < 2.2) {
-                yesFontSize += 0.2;
-                yesPaddingX += 10;
-                yesPaddingY += 6;
+            // Phình to nút CÓ theo tỉ lệ an toàn, tối đa font 1.8rem để không che chữ khác trên Desktop
+            if (yesFontSize < 1.8) {
+                yesFontSize += 0.15;
+                yesPaddingX += 8;
+                yesPaddingY += 5;
                 btnYes.style.fontSize = `${yesFontSize}rem`;
                 btnYes.style.padding = `${yesPaddingY}px ${yesPaddingX}px`;
             }
@@ -187,7 +194,7 @@
                 btnNo.innerText = noTexts[clickCount - 1];
             }
 
-            // Khi nút CÓ quá to (sau khoảng 6-7 lần bấm), ẩn luôn nút KHÔNG
+            // Khi nút CÓ quá to (sau 7 lần bấm), ẩn luôn nút KHÔNG
             if (clickCount >= 7) {
                 btnNo.style.display = 'none';
             }
