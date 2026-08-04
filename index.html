@@ -63,7 +63,9 @@
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out, background-color 0.2s;
+            transition: all 0.2s ease-in-out;
+            max-width: 100%;
+            word-wrap: break-word;
         }
 
         .btn-yes {
@@ -71,7 +73,6 @@
             color: white;
             box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
             z-index: 20;
-            white-space: nowrap;
         }
 
         .btn-yes:hover {
@@ -159,20 +160,27 @@
             "Thật sự không nhớ ông xã hối hả? 💔",
             "Suy nghĩ lại đi mà... 🌸",
             "Đừng phũ thế chứ 😞",
-            "Nhớ đi mờ 🥺",
+            "Một cơ hội nữa thôi 🥺",
             "Bấm CÓ đi mà! ❤️",
             "Không cho bấm KHÔNG nữa đâu!"
         ];
 
         let clickCount = 0;
-        let yesScale = 1;
+        let yesPaddingX = 24;
+        let yesPaddingY = 12;
+        let yesFontSize = 1;
 
         function refuseLove() {
             clickCount++;
 
-            // Phình to nút CÓ mượt mà trên điện thoại
-            yesScale += 0.35;
-            btnYes.style.transform = `scale(${yesScale})`;
+            // Phình to nút CÓ bằng padding & font-size thay vì scale để không che nội dung khác
+            if (yesFontSize < 2.2) {
+                yesFontSize += 0.2;
+                yesPaddingX += 10;
+                yesPaddingY += 6;
+                btnYes.style.fontSize = `${yesFontSize}rem`;
+                btnYes.style.padding = `${yesPaddingY}px ${yesPaddingX}px`;
+            }
 
             // Thay đổi chữ trên nút KHÔNG
             if (clickCount <= noTexts.length) {
