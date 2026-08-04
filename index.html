@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi người tôi yêu ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #d63031;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #2d3436;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            min-height: 100px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-yes {
+            background-color: #ff7675;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
+            z-index: 20;
+        }
+
+        .btn-yes:hover {
+            background-color: #d63031;
+        }
+
+        .btn-no {
+            background-color: #636e72;
+            color: white;
+            box-shadow: 0 5px 15px rgba(99, 110, 114, 0.3);
+            z-index: 10;
+        }
+
+        .btn-no:hover {
+            background-color: #2d3436;
+        }
+
+        /* Màn hình thành công */
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .gif-img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Hiệu ứng trái tim rơi */
+        .heart {
+            position: absolute;
+            color: #ff4757;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Màn hình câu hỏi chính -->
+    <div class="card screen active" id="mainCard">
+        <h1 id="questionText">Bà xã hơm có nhớ anh khôm ❤️</h1>
+        <p id="subText">Ông xã hối nhớ bà xã hơm lắm</p>
+        
+        <div class="btn-group">
+            <button class="btn-yes" id="btnYes" onclick="acceptLove()">CÓ ❤️</button>
+            <button class="btn-no" id="btnNo" onclick="refuseLove()">KHÔNG 💔</button>
+        </div>
+    </div>
+
+    <!-- Màn hình khi chọn CÓ -->
+    <div class="card screen" id="yesCard">
+        <img class="gif-img" src="https://i.pinimg.com/736x/e5/c7/66/e5c766ca35bf52bfedb8b4a7e06c7f70.jpg" alt="Happy">
+        <h1>Biết ngay là bà xã hơm nhớ ông xã hối mà! 🥰</h1>
+        <p>Cảm ơn bà xã hơm nhiều nha. Nhắn tin ngay cho ông xã hối đi, ông xã hối đang chờ nè! 💕</p>
+    </div>
+
+    <script>
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        
+        // Danh sách các câu thoại sẽ đổi dần trên nút Không
+        const noTexts = [
+            "Bà xã hơm chắc chưa? 🥺",
+            "Thật sự không nhớ ông xã hối hả? 💔",
+            "Suy nghĩ lại đi mà... 🌸",
+            "Đừng phũ thế chứ 😞",
+            "Một cơ hội nữa thôi 🥺",
+            "Bấm CÓ đi mà! ❤️",
+            "Không cho bấm KHÔNG nữa đâu!"
+        ];
+
+        let clickCount = 0;
+        let yesScale = 1;
+        let yesPaddingX = 24;
+        let yesPaddingY = 12;
+        let yesFontSize = 1;
+
+        function refuseLove() {
+            clickCount++;
+
+            // Phình to nút CÓ
+            yesScale += 0.45;
+            yesFontSize += 0.25;
+            yesPaddingX += 12;
+            yesPaddingY += 8;
+
+            btnYes.style.transform = `scale(${yesScale})`;
+            btnYes.style.fontSize = `${yesFontSize}rem`;
+            btnYes.style.padding = `${yesPaddingY}px ${yesPaddingX}px`;
+
+            // Thay đổi chữ trên nút KHÔNG
+            if (clickCount <= noTexts.length) {
+                btnNo.innerText = noTexts[clickCount - 1];
+            }
+
+            // Khi nút CÓ quá to (sau khoảng 6-7 lần bấm), ẩn luôn nút KHÔNG
+            if (clickCount >= 7) {
+                btnNo.style.display = 'none';
+            }
+        }
+
+        function acceptLove() {
+            document.getElementById('mainCard').style.display = 'none';
+            document.getElementById('yesCard').classList.add('active');
+            createHeartShower();
+        }
+
+        // Hiệu ứng tim rơi
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        function createHeartShower() {
+            for (let i = 0; i < 40; i++) {
+                setTimeout(createHeart, i * 60);
+            }
+            setInterval(createHeart, 400);
+        }
+    </script>
+</body>
+</html>
