@@ -13,35 +13,36 @@
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
             overflow: hidden;
+            padding: 15px;
         }
 
         .card {
             background: rgba(255, 255, 255, 0.9);
-            padding: 40px 30px;
+            padding: 30px 20px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             text-align: center;
             max-width: 450px;
-            width: 90%;
+            width: 100%;
             z-index: 10;
         }
 
         h1 {
             color: #d63031;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 15px;
         }
 
         p {
             color: #2d3436;
-            font-size: 1.1rem;
+            font-size: 1rem;
             line-height: 1.6;
             margin-bottom: 30px;
         }
@@ -62,7 +63,7 @@
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, background-color 0.2s;
         }
 
         .btn-yes {
@@ -70,6 +71,7 @@
             color: white;
             box-shadow: 0 5px 15px rgba(255, 118, 117, 0.4);
             z-index: 20;
+            white-space: nowrap;
         }
 
         .btn-yes:hover {
@@ -97,6 +99,7 @@
         }
 
         .gif-img {
+            max-width: 100%;
             width: 180px;
             height: 180px;
             object-fit: cover;
@@ -156,29 +159,20 @@
             "Thật sự không nhớ ông xã hối hả? 💔",
             "Suy nghĩ lại đi mà... 🌸",
             "Đừng phũ thế chứ 😞",
-            "Một cơ hội nữa thôi 🥺",
+            "Nhớ đi mờ 🥺",
             "Bấm CÓ đi mà! ❤️",
             "Không cho bấm KHÔNG nữa đâu!"
         ];
 
         let clickCount = 0;
         let yesScale = 1;
-        let yesPaddingX = 24;
-        let yesPaddingY = 12;
-        let yesFontSize = 1;
 
         function refuseLove() {
             clickCount++;
 
-            // Phình to nút CÓ
-            yesScale += 0.45;
-            yesFontSize += 0.25;
-            yesPaddingX += 12;
-            yesPaddingY += 8;
-
+            // Phình to nút CÓ mượt mà trên điện thoại
+            yesScale += 0.35;
             btnYes.style.transform = `scale(${yesScale})`;
-            btnYes.style.fontSize = `${yesFontSize}rem`;
-            btnYes.style.padding = `${yesPaddingY}px ${yesPaddingX}px`;
 
             // Thay đổi chữ trên nút KHÔNG
             if (clickCount <= noTexts.length) {
